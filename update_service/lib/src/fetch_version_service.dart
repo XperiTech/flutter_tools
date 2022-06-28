@@ -41,7 +41,7 @@ class HttpVersionService implements VersionService {
 
   @override
   Future<String?> fetchPlayStoreVersion(String packageName) async {
-    final url = Uri.parse('$_playStoreBaseUrl&id=$packageName');
+    final url = Uri.parse('$_playStoreBaseUrl?id=$packageName');
     final response = await dataProvider(url);
     if (response != null) {
       return _extractVersionFromHtml(response);

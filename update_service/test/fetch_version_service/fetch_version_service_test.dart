@@ -39,7 +39,10 @@ void main() async {
     group('extracts version from PlayStore', () {
       test('for Elveguiden', () async {
         final service = HttpVersionService(
-          dataProvider: (_) async => playStoreElveguidenOutput,
+          dataProvider: (url) async => url.toString() ==
+                  'https://play.google.com/store/apps/details?id=no.elveguiden.app'
+              ? playStoreElveguidenOutput
+              : null,
         );
 
         expect(
