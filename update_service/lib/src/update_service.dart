@@ -103,21 +103,32 @@ class UpdateService {
 
     switch (_platform) {
       case Platform.android:
-        launchUrl(
-          Uri.parse(
-            'https://play.google.com/store/apps/details?id=$packageName',
-          ),
-        );
+        final openedPlayStoreApp = await _launchPlayStoreAppUri(packageName) //
+            .onError((_, __) => false);
+
+        if (!openedPlayStoreApp) {
+          _launchPlayStoreWebUri(packageName);
+        }
         break;
       case Platform.ios:
-        launchUrl(
-          Uri.parse(
-            'https://apps.apple.com/app/${packageName.split(".").last}/id${await _versionService.fetchAppStoreAppId(packageName)}',
-          ),
-        );
+        await _launchAppStoreUri(packageName);
         break;
       case Platform.other:
         throw UnimplementedError();
     }
   }
+
+  Future<void> _launchAppStoreUri(String packageName) async {
+    launchUrl(
+      Uri.parse(
+        'https://apps.apple.com/app/${packageName.split(".").last}/id${await _versionService.fetchAppStoreAppId(packageName)}',
+      ),
+    );
+  }
+
+  Future<bool> _launchPlayStoreAppUri(String packageName) =>
+      launchUrl(Uri.parse('market://details?id=$packageName'));
+
+  Future<bool> _launchPlayStoreWebUri(String packageName) => launchUrl(
+      Uri.parse('https://play.google.com/store/apps/details?id=$packageName'));
 }
