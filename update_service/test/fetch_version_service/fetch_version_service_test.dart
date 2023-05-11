@@ -28,7 +28,7 @@ void main() async {
       );
 
       expect(await service.fetchAppStoreVersion('com.elvefiske.elveguiden'),
-          '3.6.18');
+          '3.8.0');
       expect(await service.fetchAppStoreAppId('com.elvefiske.elveguiden'),
           1464552726);
 
@@ -46,7 +46,7 @@ void main() async {
         );
 
         expect(
-            await service.fetchPlayStoreVersion('no.elveguiden.app'), '3.6.18');
+            await service.fetchPlayStoreVersion('no.elveguiden.app'), '3.8.0');
       });
 
       test('for Campio', () async {
@@ -55,7 +55,7 @@ void main() async {
         );
 
         expect(await service.fetchPlayStoreVersion('com.campio.campioapp'),
-            '2.4.0');
+            '2.5.0');
       });
 
       test('for Firefox', () async {
@@ -64,7 +64,7 @@ void main() async {
         );
 
         expect(await service.fetchPlayStoreVersion('org.mozilla.firefox'),
-            '106.1.0');
+            '112.2.0');
       });
     });
 
