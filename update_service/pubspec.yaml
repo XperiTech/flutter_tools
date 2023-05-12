@@ -1,6 +1,6 @@
 name: update_service
 description: Utility service that check whether an update is available in PlayStore or AppStore
-version: 1.1.0
+version: 1.1.1
 publish_to: 'none'
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   html: ">=0.15.1 <0.16.0"
   http: ">=0.13.5 <0.14.0"
-  package_info_plus: ">=3.0.0 <4.0.0"
+  package_info_plus: ">=4.0.0 <5.0.0"
   url_launcher: ">=6.1.6 <7.0.0"
 
 dev_dependencies:
