@@ -2,10 +2,9 @@ import 'dart:io' as io;
 
 import 'package:url_launcher/url_launcher.dart';
 
+import '../update_service.dart';
 import 'fetch_version_service.dart';
 import 'package_info_service.dart';
-
-enum UpdateStatus { required, optional, upToDate, unknown }
 
 enum Platform { android, ios, other }
 
@@ -35,13 +34,13 @@ class UpdateService {
 
   Future<UpdateStatus> checkStatus({bool? skipUpdate}) async {
     if (skipUpdate == true) {
-      return UpdateStatus.upToDate;
+      return UpdateStatus.upToDate();
     }
 
     try {
       return await _checkStatus();
     } catch (ex) {
-      return UpdateStatus.unknown;
+      return UpdateStatus.unknown();
     }
   }
 
@@ -49,7 +48,7 @@ class UpdateService {
     final localVersion = await _packageInfoService.getAppVersion();
     final packageName = await _packageInfoService.getPackageName();
     if (packageName == null) {
-      return UpdateStatus.unknown;
+      return UpdateStatus.unknown();
     }
 
     final String? publishedVersion;
@@ -67,7 +66,7 @@ class UpdateService {
     }
 
     if (publishedVersion == null || localVersion == null) {
-      return UpdateStatus.unknown;
+      return UpdateStatus.unknown();
     }
 
     return _computeUpdateStatus(localVersion, publishedVersion);
@@ -87,11 +86,11 @@ class UpdateService {
     final localPatch = localVersionParts[2];
 
     if (publishedMajor > localMajor) {
-      return UpdateStatus.required;
+      return UpdateStatus.required(localVersion, publishedVersion);
     } else if (publishedMinor > localMinor || publishedPatch > localPatch) {
-      return UpdateStatus.optional;
+      return UpdateStatus.optional(localVersion, publishedVersion);
     } else {
-      return UpdateStatus.upToDate;
+      return UpdateStatus.upToDate();
     }
   }
 

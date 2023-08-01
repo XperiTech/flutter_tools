@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 import 'package:update_service/src/fetch_version_service.dart';
 import 'package:update_service/src/package_info_service.dart';
 import 'package:update_service/src/update_service.dart';
+import 'package:update_service/src/update_status.dart';
 
 void main() async {
   group('UpdateService', () {
@@ -16,7 +17,10 @@ void main() async {
             platform: platform,
           );
 
-          expect(await service.checkStatus(), UpdateStatus.required);
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.required('1.9.0', '2.0.0'),
+          );
         });
 
         test('detects optional update when minor version is higher', () async {
@@ -26,7 +30,10 @@ void main() async {
             platform: platform,
           );
 
-          expect(await service.checkStatus(), UpdateStatus.optional);
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.optional('1.3.0', '1.4.0'),
+          );
         });
 
         test('detects optional update when patch version is higher', () async {
@@ -36,7 +43,10 @@ void main() async {
             platform: platform,
           );
 
-          expect(await service.checkStatus(), UpdateStatus.optional);
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.optional('1.3.0', '1.3.1'),
+          );
         });
 
         test('returns upToDate when versions are equal', () async {
@@ -46,7 +56,10 @@ void main() async {
             platform: platform,
           );
 
-          expect(await service.checkStatus(), UpdateStatus.upToDate);
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.upToDate(),
+          );
         });
 
         test('returns unknown when version string is malformed', () async {
@@ -56,7 +69,10 @@ void main() async {
             platform: platform,
           );
 
-          expect(await service.checkStatus(), UpdateStatus.unknown);
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.unknown(),
+          );
         });
       });
     }
@@ -68,7 +84,10 @@ void main() async {
         platform: Platform.other,
       );
 
-      expect(await service.checkStatus(), UpdateStatus.unknown);
+      expect(
+        await service.checkStatus(),
+        UpdateStatus.unknown(),
+      );
     });
   });
 }
