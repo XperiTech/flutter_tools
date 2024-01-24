@@ -1,3 +1,6 @@
+## 1.2.1
+- Prepare to publish in pub.dev
+
 ## 1.2.0
 - **Breaking**: Refactor `UpdateStatus` to be a freezed generated class
 

@@ -1,7 +1,9 @@
 name: update_service
 description: Utility service that check whether an update is available in PlayStore or AppStore
-version: 1.2.0
-publish_to: 'none'
+version: 1.2.1
+homepage: https://github.com/XperiTech
+repository: https://github.com/XperiTech/date_time_iso
+
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
