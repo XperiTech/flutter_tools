@@ -88,7 +88,9 @@ void main() async {
           );
         });
 
-        test('returns upToDate when published minor is lower but patch is higher', () async {
+        test(
+            'returns upToDate when published minor is lower but patch is higher',
+            () async {
           final service = _createUpdateService(
             localVersion: '1.3.0',
             publishedVersion: '1.2.1',

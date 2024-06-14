@@ -1,8 +1,8 @@
 name: update_service
 description: Utility service that check whether an update is available in PlayStore or AppStore
-version: 1.3.0
+version: 1.3.1
 homepage: https://github.com/XperiTech
-repository: https://github.com/XperiTech/date_time_iso
+repository: https://github.com/XperiTech/flutter_tools
 
 
 environment:

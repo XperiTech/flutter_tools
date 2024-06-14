@@ -1,5 +1,9 @@
 ### update_service
 
+[![build](https://github.com/XperiTech/flutter_tools/actions/workflows/test.yml/badge.svg)](https://github.com/XperiTech/flutter_tools/actions/workflows/test.yml)
+[![pub package](https://img.shields.io/pub/v/update_service.svg)](https://pub.dev/packages/update_service)
+[![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
+
 Utility service that checks whether an update is available according to [semantic versioning](https://semver.org).
 
 ## Getting started
