@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:url_launcher/url_launcher.dart';
@@ -39,7 +40,9 @@ class UpdateService {
 
     try {
       return await _checkStatus();
-    } catch (ex) {
+    } catch (ex, s) {
+      log('[update_service] Failed to check update status',
+          error: ex, stackTrace: s);
       return UpdateStatus.unknown();
     }
   }
@@ -74,20 +77,15 @@ class UpdateService {
 
   UpdateStatus _computeUpdateStatus(
       String localVersion, String publishedVersion) {
-    final publishedVersionParts =
+    final [pubMajor, pubMinor, pubPatch] =
         publishedVersion.split('.').map(int.parse).toList();
-    final publishedMajor = publishedVersionParts[0];
-    final publishedMinor = publishedVersionParts[1];
-    final publishedPatch = publishedVersionParts[2];
+    final [localMajor, localMinor, localPatch] =
+        localVersion.split('.').map(int.parse).toList();
 
-    final localVersionParts = localVersion.split('.').map(int.parse).toList();
-    final localMajor = localVersionParts[0];
-    final localMinor = localVersionParts[1];
-    final localPatch = localVersionParts[2];
-
-    if (publishedMajor > localMajor) {
+    if (pubMajor > localMajor) {
       return UpdateStatus.required(localVersion, publishedVersion);
-    } else if (publishedMinor > localMinor || publishedPatch > localPatch) {
+    } else if (pubMinor > localMinor ||
+        (pubPatch > localPatch && pubMinor == localMinor)) {
       return UpdateStatus.optional(localVersion, publishedVersion);
     } else {
       return UpdateStatus.upToDate();

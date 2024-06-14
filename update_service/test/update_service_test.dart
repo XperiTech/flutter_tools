@@ -62,6 +62,45 @@ void main() async {
           );
         });
 
+        test('returns upToDate when published minor is lower', () async {
+          final service = _createUpdateService(
+            localVersion: '1.3.0',
+            publishedVersion: '1.2.0',
+            platform: platform,
+          );
+
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.upToDate(),
+          );
+        });
+
+        test('returns upToDate when published patch is lower', () async {
+          final service = _createUpdateService(
+            localVersion: '1.3.1',
+            publishedVersion: '1.3.0',
+            platform: platform,
+          );
+
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.upToDate(),
+          );
+        });
+
+        test('returns upToDate when published minor is lower but patch is higher', () async {
+          final service = _createUpdateService(
+            localVersion: '1.3.0',
+            publishedVersion: '1.2.1',
+            platform: platform,
+          );
+
+          expect(
+            await service.checkStatus(),
+            UpdateStatus.upToDate(),
+          );
+        });
+
         test('returns unknown when version string is malformed', () async {
           final service = _createUpdateService(
             localVersion: '1.3.0',
