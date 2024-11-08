@@ -50,3 +50,38 @@ void main() async {
   );
 }
 ```
+
+## Migration to 2.0.0
+
+### Usage
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:update_service/update_service.dart';
+
+void main() async {
+  final updateService = UpdateService.createDefault();
+
+
+  final updateStatus = await updateService.checkStatus(
+    skipUpdate: kDebugMode,
+    // [Optional] Specify the minimum required version for a force update
+    forceUpdateVersion: '2.1.0',
+  );
+
+  updateStatus.when(
+    required: (local, published) =>
+        // Required update for versions lower than 2.1.0
+        updateService.openStore(),
+    optional: (local, published) =>
+        // Update is optional if no forced version requirement is met
+        // e.g. 1.0.0 -> 1.0.1
+        //   or 1.0.0 -> 1.1.0
+        print('update optional'),
+    upToDate: ()
+        // The app is up to date with the latest or meets the required version
+        {},
+    unknown: ()
+        // Can't determine if an update is available due to network or other issues
+        {},
+  );
+}
