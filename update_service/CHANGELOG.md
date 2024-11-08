@@ -1,3 +1,7 @@
+## 2.0.0
+- **Breaking**: Add `forceUpdateVersion` parameter to `checkStatus` method
+  - Removed automatic force update by major version; use `forceUpdateVersion` instead
+
 ## 1.3.1
 - Update readme, formatting and pubspec.yaml
 
